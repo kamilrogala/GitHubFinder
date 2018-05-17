@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>gitFinder</title>
+	<link href="https://bootswatch.com/3/simplex/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div id="app" class="container">
+		<div class="jumbotron">
+			<h1>GitHub Finder</h1>
+			<h3>Find informations about GitHub user</h3>
+		</div>
+		<div class="alert alert-info">
+			<p><strong>Instructions:</strong></p>
+			<p>Just type username- script will automatically find informations</p>
+		</div>
+		<hr class="my-4">
+		<form v-on:submit.prevent>
+			<div class="form-group">
+				<label for="username">GitHub username</label>
+				<input @change="findUser(username)" v-model="username" type="text" class="form-control" id="username" placeholder="Enter username">
+			</div>
+		</form>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{userData.name}}</h3>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-3">
+						<img class="img-responsive thumbnail avatar" v-bind:src="userData.avatar_url">
+						<a target="_blank" class="btn btn-primary btn-block" v-bind:href="userData.html_url">User profile</a>
+					</div>
+					<div class="col-md-9">
+						<span class="label label-default">Repositories: {{userData.public_repos}}</span>
+						<span class="label label-primary">Gists: {{userData.public_gists}}</span>
+						<span class="label label-success">Followers: {{userData.followers}}</span>
+						<span class="label label-info">Following: {{userData.following}}</span>
+						<br><br>
+						<ul class="list-group">
+							<li class="list-group-item">Company/Organization: {{userData.company}}</li>
+							<li class="list-group-item">Blog: <a v-bind:href="userData.blog" target="_blank">{{userData.blog}}</a></li>
+							<li class="list-group-item">Location: {{userData.location}}</li>
+							<li class="list-group-item">Account created: {{userData.created_at}}</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<h3 class="page-header">Last repositories</h3>
+		<div id="repos">
+			<div v-for="repository in userRepositories" class="well">
+				<div class="row">
+					<div class="col-md-7">
+						<strong>{{repository.name}}</strong>: {{repository.description}}
+					</div>
+					<div class="col-md-3">
+						<span class="label label-default">Forks: {{repository.forks_count}}</span>
+						<span class="label label-primary">Watchers: {{repository.watchers_count}}</span>
+						<span class="label label-success">Stars: {{repository.stargazers_count}}</span>
+					</div>
+					<div class="col-md-2">
+						<a v-bind:href="repository.html_url" target="_blank" class="btn btn-default">Repository URL</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="vue.js"></script>
+	<script src="init.js"></script>
+</body>
+
+</html>
